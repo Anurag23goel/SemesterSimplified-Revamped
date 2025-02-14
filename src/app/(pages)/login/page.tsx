@@ -1,95 +1,53 @@
-"use client";
-import { useForm } from "react-hook-form";
-import axios from "axios";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import Link from "next/link";
+import Image from "next/image";
+import LoginForm from "./LoginForm";
 
-type LoginFormInputs = {
-  email: string;
-  password: string;
-};
-
-export default function Login() {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isSubmitting },
-  } = useForm<LoginFormInputs>();
-
-  const [errorMessage, setErrorMessage] = useState("");
-  const router = useRouter();
-
-  const loginFormSubmit = async (data: LoginFormInputs) => {
-    console.log(data);
-    try {
-      const response = await axios.post("/api/users/auth/login", data);
-
-      if (response.data.success) {
-        router.push("/"); // ✅ Redirect on successful login
-      }
-    } catch (error: any) {
-      setErrorMessage(error.response?.data?.error || "Login failed!");
-    }
-  };
-
+export default function LoginPage() {
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <div className="bg-white p-8 shadow-md rounded-lg w-96">
-        <h2 className="text-2xl font-bold mb-6 text-center">Login</h2>
-
-        {errorMessage && (
-          <p className="text-red-500 text-center">{errorMessage}</p>
-        )}
-
-        <form onSubmit={handleSubmit(loginFormSubmit)} className="space-y-4">
-          {/* Email Field */}
-          <div className="flex flex-col">
-            <label htmlFor="email" className="font-medium">
-              Email
-            </label>
-            <input
-              type="email"
-              {...register("email", { required: "Email is required" })}
-              className="p-3 border rounded-md"
-              placeholder="Enter Email"
+    // TOP DIV
+    <div className="h-screen md:h-screen w-screen flex items-center justify-center bg-white">
+      {/* INNER DIV */}
+      <div className="md:h-[92%] h-full md:w-[85%] flex rounded-xl md:gap-4">
+        {/* LEFT FORM PART */}
+        <div className="w-screen md:w-[55%] h-full flex flex-col gap-20 p-5">
+          {/* LOGO AND HEADING */}
+          <div className="flex lg:flex-row-reverse gap-2 items-center">
+            <Image
+              src={"/mainlogo.jpeg"}
+              alt="logo"
+              width={65}
+              height={65}
+              className="rounded-full"
             />
-            {errors.email && (
-              <p className="text-red-500">{errors.email.message}</p>
-            )}
+            <div className="flex flex-col">
+              <h1 className="text-2xl font-semibold font-serif">
+                Semester Simplified
+              </h1>
+              <span className="hidden md:block text-md lg:text-end text-gray-500 font-serif">
+                An Online Learning Platform
+              </span>
+            </div>
           </div>
 
-          {/* Password Field */}
-          <div className="flex flex-col">
-            <label htmlFor="password" className="font-medium">
-              Password
-            </label>
-            <input
-              type="password"
-              {...register("password", { required: "Password is required" })}
-              className="p-3 border rounded-md"
-              placeholder="Enter Password"
-            />
-            {errors.password && (
-              <p className="text-red-500">{errors.password.message}</p>
-            )}
+          {/* KICKSTART */}
+          <div className="flex flex-col items-center gap-5 lg:gap-10">
+            <p className="text-2xl md:text-[40px] font-semibold font-serif leading-snug">
+              Kicktart Your Journey With Us !
+            </p>
+            <LoginForm />
           </div>
+        </div>
 
-          {/* Submit Button */}
-          <button
-            type="submit"
-            className="w-full bg-yellow-500 text-white p-3 rounded-md hover:bg-yellow-600"
-            disabled={isSubmitting}
-          >
-            {isSubmitting ? "Logging in..." : "Login"}
-          </button>
-          <p className="text-center">
-            Don't have an account ?{" "}
-            <Link className="hover:underline text-blue-600" href="/register">
-              Register Here
-            </Link>
-          </p>
-        </form>
+        {/* RIGHT IMAGE PART */}
+        <div className="w-[45%] hidden md:flex">
+          <Image
+            src={"/login/login1.jpg"}
+            // src={"/login/images.png"}
+            alt="loginImage"
+            width={10000}
+            height={10000}
+            className="w-full h-full object-cover"
+          />
+        </div>
       </div>
     </div>
   );

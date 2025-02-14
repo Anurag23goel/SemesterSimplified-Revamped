@@ -15,6 +15,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Semester Simplified",
   description: "Semester Simplified - Revamped | Next.JS",
+  icons: {
+    icon: "/favicon.ico", // Default favicon
+  },
 };
 
 export default function RootLayout({
