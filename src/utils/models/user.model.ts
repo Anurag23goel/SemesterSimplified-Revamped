@@ -3,12 +3,8 @@ import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema(
   {
-    fullName: {
-      firstName: {
-        type: String,
-        required: true,
-      },
-      lastName: { type: String },
+    name: {
+      type: String,
     },
     userName: {
       type: String,
@@ -48,6 +44,12 @@ const userSchema = new mongoose.Schema(
         ref: "Document",
       },
     ],
+    university: {
+      type: String,
+    },
+    college: {
+      type: String,
+    },
     socketID: {
       type: String,
     },

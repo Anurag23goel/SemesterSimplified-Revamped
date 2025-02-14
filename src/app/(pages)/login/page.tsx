@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 type LoginFormInputs = {
   email: string;
@@ -20,7 +21,7 @@ export default function Login() {
   const router = useRouter();
 
   const loginFormSubmit = async (data: LoginFormInputs) => {
-    console.log(data)
+    console.log(data);
     try {
       const response = await axios.post("/api/users/auth/login", data);
 
@@ -77,11 +78,17 @@ export default function Login() {
           {/* Submit Button */}
           <button
             type="submit"
-            className="w-full bg-blue-600 text-white p-3 rounded-md hover:bg-blue-700"
+            className="w-full bg-yellow-500 text-white p-3 rounded-md hover:bg-yellow-600"
             disabled={isSubmitting}
           >
             {isSubmitting ? "Logging in..." : "Login"}
           </button>
+          <p className="text-center">
+            Don't have an account ?{" "}
+            <Link className="hover:underline text-blue-600" href="/register">
+              Register Here
+            </Link>
+          </p>
         </form>
       </div>
     </div>

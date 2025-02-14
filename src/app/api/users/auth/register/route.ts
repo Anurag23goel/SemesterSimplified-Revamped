@@ -8,16 +8,11 @@ export async function POST(req: NextRequest) {
   try {
     databaseConnection();
     const registeredUser = await USER.create({
+      name: userData.name,
       userName: userData.userName,
       email: userData.email,
       password: userData.password,
       phoneNumber: userData.phoneNumber,
-      fullName: {
-        firstName: userData.fullName.firstName,
-        ...(userData.fullName.lastName && {
-          lastName: userData.fullName.lastName,
-        }),
-      },
     });
 
     return NextResponse.json(
