@@ -1,0 +1,61 @@
+import { NextRequest, NextResponse } from "next/server";
+import { jwtVerify } from "jose"; // ✅ Works in Edge runtime
+
+// Ensure JWT Secret exists
+if (!process.env.JWT_SECRET) {
+  throw new Error("JWT_SECRET is missing from environment variables");
+}
+
+const SECRET_KEY = new TextEncoder().encode(process.env.JWT_SECRET);
+
+export async function middleware(request: NextRequest) {
+  const token = request.cookies.get("token")?.value;
+
+  try {
+    // ✅ If user is trying to access protected routes but has no token, redirect to login
+    if (!token) {
+      const protectedRoutes = ["/admin", "/api/users/getUserData"];
+      if (protectedRoutes.includes(request.nextUrl.pathname)) {
+        return NextResponse.redirect(new URL("/user/login", request.url));
+      }
+      return NextResponse.next(); // Allow access to public routes
+    }
+
+    // ✅ Verify the token
+    const { payload } = await jwtVerify(token, SECRET_KEY);
+
+    // ✅ Forward user data in the headers
+    const newHeaderWithUserData = new Headers(request.headers);
+    newHeaderWithUserData.set("user-data", JSON.stringify(payload));
+
+    // ✅ Restrict access to Admin-only routes
+    const adminOnlyRoutes = ["/admin"];
+    if (adminOnlyRoutes.includes(request.nextUrl.pathname) && payload.role !== "Administrator") {
+      return NextResponse.redirect(new URL("/", request.url));
+    }
+
+    // ✅ Prevent authenticated users from accessing login, register, or forgot-password pages
+    const publicAuthPages = ["/user/login", "/user/register", "/user/forgot-password"];
+    if (publicAuthPages.includes(request.nextUrl.pathname)) {
+      return NextResponse.redirect(new URL("/", request.url));
+    }
+
+    return NextResponse.next({
+      request: {
+        headers: newHeaderWithUserData,
+      },
+    });
+  } catch (error) {
+    console.log("Error in middleware:", error.message);
+    return NextResponse.redirect(new URL("/user/login", request.url));
+  }
+}
+
+// ✅ Define paths where middleware should apply
+export const config = {
+  matcher: [
+    "/api/users/getUserData",
+    "/admin",
+    "/user/:path*"
+  ],
+};

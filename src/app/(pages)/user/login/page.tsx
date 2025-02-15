@@ -30,8 +30,8 @@ export default function LoginPage() {
 
           {/* KICKSTART */}
           <div className="flex flex-col items-center gap-5 lg:gap-10">
-            <p className="text-2xl md:text-[40px] font-semibold font-serif leading-snug">
-              Kicktart Your Journey With Us !
+            <p className="text-2xl md:text-[44px] font-semibold font-serif leading-snug">
+              Kicktart Your Journey Today !
             </p>
             <LoginForm />
           </div>

@@ -59,10 +59,9 @@ export default function RegisterForm() {
     <>
       {serverError && <p className="text-red-500 text-center">{serverError}</p>}
 
-      <form
-        onSubmit={handleSubmit(registerFormSubmit)}
-        className="grid grid-cols-1 md:grid-cols-2 gap-3 px-6 py-4 rounded-lg w-full md:w-[75%] mx-auto h-fit md:h-[90%] bg-white"
-      >
+      <form onSubmit={handleSubmit(registerFormSubmit)} 
+      className="grid grid-cols-1 md:grid-cols-2 gap-3 px-6 py-4 rounded-3xl w-full md:w-[75%] mx-auto h-fit md:h-[90%] ">
+        
         {/* HEADING */}
         <h2 className="text-xl md:text-3xl font-semibold mb-3 text-center col-span-full">
           Let's Get Started
@@ -300,7 +299,7 @@ export default function RegisterForm() {
         {/* Submit Button */}
         <button
           type="submit"
-          className="mx-auto w-full bg-yellow-400 py-2 text-lg text-black font-semibold rounded-md hover:scale-110 hover:transition hover:duration-300 col-span-full"
+          className="mx-auto w-full bg-yellow-400 py-2 text-lg text-black font-semibold rounded-md hover:scale-105 hover:transition hover:duration-300 col-span-full"
           disabled={isSubmitting}
         >
           {isSubmitting ? "Registering..." : "Create Account"}
@@ -310,7 +309,10 @@ export default function RegisterForm() {
         <div className="col-span-full text-center">
           <p className="text-lg">
             Already Have an Account ?{" "}
-            <Link className="text-blue-500 hover:underline" href={"/user/login"}>
+            <Link
+              className="text-blue-500 hover:underline"
+              href={"/user/login"}
+            >
               Sign In
             </Link>
           </p>

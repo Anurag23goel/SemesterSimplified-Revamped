@@ -73,7 +73,7 @@ export default function LoginForm() {
             placeholder="Enter Password"
           />
           <Link
-            href={"/forgot-password"}
+            href={"/user/forgot-password"}
             className="hover:underline hover:text-blue-500 text-end mt-1"
           >
             Forgot Password?
@@ -95,7 +95,7 @@ export default function LoginForm() {
         {/* REGISTER LINK */}
         <p className="text-center text-lg">
           Don't have an account ?{" "}
-          <Link className="hover:underline text-blue-600" href="/register">
+          <Link className="hover:underline text-blue-600" href="/user/register">
             Register Here
           </Link>
         </p>

@@ -3,7 +3,7 @@ import RegisterForm from "./RegisterForm";
 
 export default function Register() {
   return (
-    <div className="h-fit md:h-screen w-screen flex items-center justify-center bg-gray-300">
+    <div className="h-fit md:h-screen w-screen flex items-center justify-center bg-white">
       {/* INNER DIV */}
       <div className="h-[92%] w-[85%] flex text-center rounded-xl">
         {/* LEFT PART */}
