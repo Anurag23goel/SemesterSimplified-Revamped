@@ -310,7 +310,7 @@ export default function RegisterForm() {
         <div className="col-span-full text-center">
           <p className="text-lg">
             Already Have an Account ?{" "}
-            <Link className="text-blue-500 hover:underline" href={"/login"}>
+            <Link className="text-blue-500 hover:underline" href={"/user/login"}>
               Sign In
             </Link>
           </p>

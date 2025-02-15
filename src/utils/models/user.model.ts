@@ -55,7 +55,12 @@ const userSchema = new mongoose.Schema(
     },
     accessToken: {
       type: String,
-      expiresIn: "1d",
+      expires: 60*60*24, // 1 day
+    },
+    forgotPasswordOTP: {
+      type: String,
+      select: false,
+      expires: 60*5, // 5 minutes
     },
   },
 

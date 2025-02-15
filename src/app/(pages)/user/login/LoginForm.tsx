@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 
 type LoginFormInputs = {
-  email: string;
+  emailUsername: string;
   password: string;
 };
 
@@ -39,22 +39,25 @@ export default function LoginForm() {
         <p className="text-red-500 text-center">{errorMessage}</p>
       )}
 
-      <form onSubmit={handleSubmit(loginFormSubmit)} className="grid grid-cols-1 gap-4 w-full h-fit">
-        
-        
+      <form
+        onSubmit={handleSubmit(loginFormSubmit)}
+        className="grid grid-cols-1 gap-4 w-full h-fit"
+      >
         {/* Email Field */}
         <div className="flex flex-col">
           <label htmlFor="email" className="text-xl font-medium">
             Email<span className="text-gray-500 text-sm"> or </span>Username
           </label>
           <input
-            type="email"
-            {...register("email", { required: "Email is required" })}
+            type="text"
+            {...register("emailUsername", {
+              required: "Email or Username is required",
+            })}
             className="p-3 border rounded-md border-gray-400 bg-gray-100"
             placeholder="Enter Email or Username"
           />
-          {errors.email && (
-            <p className="text-red-500">{errors.email.message}</p>
+          {errors.emailUsername && (
+            <p className="text-red-500">{errors.emailUsername.message}</p>
           )}
         </div>
 
@@ -69,7 +72,12 @@ export default function LoginForm() {
             className="p-3 border border-gray-400 rounded-md bg-gray-100"
             placeholder="Enter Password"
           />
-          <Link href={"/forgot-password"} className="hover:underline hover:text-blue-500 text-end mt-1">Forgot Password?</Link>
+          <Link
+            href={"/forgot-password"}
+            className="hover:underline hover:text-blue-500 text-end mt-1"
+          >
+            Forgot Password?
+          </Link>
           {errors.password && (
             <p className="text-red-500">{errors.password.message}</p>
           )}

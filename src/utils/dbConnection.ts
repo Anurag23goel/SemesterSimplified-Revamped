@@ -1,8 +1,12 @@
 import mongoose from "mongoose";
 
 const databaseConnection = async () => {
+
+  console.log(process.env.MONGO_DB_URL);
+  
+
   if (!process.env.MONGO_DB_URL) {
-    throw new Error("Please define MONGODB_URI in your .env.development file");
+    throw new Error("Please define MONGO_DB_URL in your .env.development file");
   }
 
   try {
