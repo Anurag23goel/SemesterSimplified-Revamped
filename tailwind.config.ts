@@ -73,7 +73,9 @@ const config: Config = {
   		},
   		animation: {
   			'spin-slow': 'spin 15s linear infinite',
-  			'spin-reverse': 'spin-reverse 15s linear infinite'
+  			'spin-reverse': 'spin-reverse 15s linear infinite',
+  			'accordion-down': 'accordion-down 0.2s ease-out',
+  			'accordion-up': 'accordion-up 0.2s ease-out'
   		},
   		keyframes: {
   			spin: {
@@ -90,6 +92,22 @@ const config: Config = {
   				},
   				to: {
   					transform: 'rotate(-360deg)'
+  				}
+  			},
+  			'accordion-down': {
+  				from: {
+  					height: '0'
+  				},
+  				to: {
+  					height: 'var(--radix-accordion-content-height)'
+  				}
+  			},
+  			'accordion-up': {
+  				from: {
+  					height: 'var(--radix-accordion-content-height)'
+  				},
+  				to: {
+  					height: '0'
   				}
   			}
   		},

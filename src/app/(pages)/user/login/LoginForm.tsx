@@ -4,6 +4,9 @@ import axios from "axios";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { useDispatch } from "react-redux";
+import { login } from "@/app/redux/slices/AuthSlice";
+import toast from "react-hot-toast";
 
 type LoginFormInputs = {
   emailUsername: string;
@@ -19,6 +22,7 @@ export default function LoginForm() {
 
   const [errorMessage, setErrorMessage] = useState("");
   const router = useRouter();
+  const dispatch = useDispatch();
 
   const loginFormSubmit = async (data: LoginFormInputs) => {
     console.log(data);
@@ -26,6 +30,8 @@ export default function LoginForm() {
       const response = await axios.post("/api/users/auth/login", data);
 
       if (response.data.success) {
+        dispatch(login());
+        toast.success("Login successful!");
         router.push("/"); // ✅ Redirect on successful login
       }
     } catch (error) {

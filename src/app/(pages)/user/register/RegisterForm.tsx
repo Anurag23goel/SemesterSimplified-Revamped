@@ -175,6 +175,9 @@ export default function RegisterForm() {
             <option value="AKTU" className="">
               AKTU
             </option>
+            <option value="Others" className="">
+              Others
+            </option>
           </select>
 
           {errors.university && (
@@ -197,6 +200,7 @@ export default function RegisterForm() {
           >
             <option value="">Select College</option>
             <option value="DGI">Dronacharya Group of Institutions</option>
+            <option value="Others" className="">Others</option>
           </select>
 
           {errors.college && (

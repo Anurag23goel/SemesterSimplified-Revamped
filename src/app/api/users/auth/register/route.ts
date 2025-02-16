@@ -6,7 +6,7 @@ export async function POST(req: NextRequest) {
   const userData = await req.json();
 
   try {
-    databaseConnection();
+    await databaseConnection();
     const registeredUser = await USER.create({
       name: userData.name,
       userName: userData.userName,

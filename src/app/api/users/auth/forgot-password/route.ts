@@ -9,7 +9,7 @@ export async function POST(req: NextRequest) {
   const { email } = await req.json();
 
   try {
-    databaseConnection();
+     await databaseConnection();
 
     const user = await USER.findOne({ email });
 

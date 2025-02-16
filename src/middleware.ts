@@ -9,11 +9,9 @@ if (!process.env.JWT_SECRET) {
 const JWT_SECRET = new TextEncoder().encode(process.env.JWT_SECRET as string);
 
 export async function middleware(request: NextRequest) {
-  // console.log("Path:", request.nextUrl.pathname);
 
   // Extract token from cookies
   const token = request.cookies.get("token")?.value;
-  // console.log("Token:", token);
 
   try {
     // If there is no token, allow public routes (like login, register)

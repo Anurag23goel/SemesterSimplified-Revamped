@@ -8,7 +8,7 @@ export async function POST(req: NextRequest) {
   const userEmail = req.cookies.get("userEmail")?.value;
 
   try {
-    databaseConnection();
+    await databaseConnection();
 
     const updatedUser = await USER.findOneAndUpdate(
       { email: userEmail },
