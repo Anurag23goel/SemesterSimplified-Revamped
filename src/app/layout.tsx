@@ -36,8 +36,9 @@ export default function RootLayout({
       >
         <ReduxProvider>
           <AuthInitializer />
+
           {children}
-          </ReduxProvider>
+        </ReduxProvider>
         <Toaster position="top-center" toastOptions={{ duration: 2000 }} />
       </body>
     </html>
