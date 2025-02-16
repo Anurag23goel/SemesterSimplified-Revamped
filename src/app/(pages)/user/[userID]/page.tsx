@@ -6,7 +6,7 @@ interface ProfilePageProps {
     const { userID } = await params; // ✅ Extract userID from URL
   
     return (
-      <div className="">
+      <div className="w-full h-full border border-black">
         <h1 className="text-2xl font-bold">User Profile</h1>
         <p>User ID: {userID}</p>
       </div>
