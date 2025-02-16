@@ -35,7 +35,7 @@ export default function ForgotPassword() {
             </h1>
             <p className="text-xl font-serif w-[85%] text-center">
               Do not worry! Enter your{" "}
-              <span className="font-semibold">registered email address</span> and we'll
+              <span className="font-semibold">registered email address</span> and we&apos;ll
               send you an OTP to reset your password
             </p>
           </div>

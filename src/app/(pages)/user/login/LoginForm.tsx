@@ -30,11 +30,11 @@ export default function LoginForm() {
       const response = await axios.post("/api/users/auth/login", data);
 
       if (response.data.success) {
-        dispatch(login());
+        dispatch(login(response.data.data.id));
         toast.success("Login successful!");
         router.push("/"); // ✅ Redirect on successful login
       }
-    } catch (error) {
+    } catch (error: any) {
       setErrorMessage(error.response?.data?.error || "Login failed!");
     }
   };
@@ -100,7 +100,7 @@ export default function LoginForm() {
 
         {/* REGISTER LINK */}
         <p className="text-center text-lg">
-          Don't have an account ?{" "}
+          Don&apos;t have an account ?{" "}
           <Link className="hover:underline text-blue-600" href="/user/register">
             Register Here
           </Link>

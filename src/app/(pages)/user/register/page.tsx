@@ -35,7 +35,7 @@ export default function Register() {
               Semester Simplified
             </h1>
             <p className="text-lg w-full capitalize text-pretty font-serif">
-              Unleash Your Academic Success with Semester Simplified's One Stop
+              Unleash Your Academic Success with Semester Simplified&apos;s One Stop
               Platform Solution. Experience All the Requirements at One Place
             </p>
           </div>

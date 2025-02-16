@@ -9,7 +9,6 @@ if (!process.env.JWT_SECRET) {
 const JWT_SECRET = new TextEncoder().encode(process.env.JWT_SECRET as string);
 
 export async function middleware(request: NextRequest) {
-
   // Extract token from cookies
   const token = request.cookies.get("token")?.value;
 
@@ -35,7 +34,9 @@ export async function middleware(request: NextRequest) {
       try {
         await jwtVerify(token, JWT_SECRET); // Verify if token is valid
         return NextResponse.redirect(new URL("/", request.url)); // Only redirect if token is valid
-      } catch (err) {
+      } catch (error: any) {
+        console.log("Error while verifying token:", error);
+
         // Token is invalid, allow access to login/register
       }
     }
@@ -49,7 +50,7 @@ export async function middleware(request: NextRequest) {
     }
 
     return NextResponse.next();
-  } catch (error) {
+  } catch (error: any){
     console.error("Middleware Error:", error.message);
     return NextResponse.next(); // Allow user to access login page if token is invalid
   }

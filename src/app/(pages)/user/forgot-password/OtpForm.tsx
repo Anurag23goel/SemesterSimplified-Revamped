@@ -47,7 +47,7 @@ export default function OtpForm() {
         toast.success("OTP resent successfully!");
         setTimer(15); // Reset the timer
       }
-    } catch (error) {
+    } catch (error: any) {
       toast.error(error.response?.data?.error || "Failed to resend OTP");
     }
   };
@@ -64,7 +64,7 @@ export default function OtpForm() {
         setStep(2);
         setTimer(15); // Start countdown after sending OTP
       }
-    } catch (error) {
+    } catch (error: any) {
       toast.error(error.response?.data?.error || "Error sending OTP");
     }
   };
@@ -80,7 +80,7 @@ export default function OtpForm() {
         toast.success("OTP verified!");
         setStep(3);
       }
-    } catch (error) {
+    } catch (error: any) {
       toast.error(error.response?.data?.error || "Invalid OTP");
     }
   };
@@ -96,7 +96,7 @@ export default function OtpForm() {
         toast.success("Password updated successfully!");
         router.push("/user/login");
       }
-    } catch (error) {
+    } catch (error: any) {
       toast.error(error.response?.data?.error || "Error resetting password");
     }
   };
@@ -146,7 +146,7 @@ export default function OtpForm() {
             Verify OTP
           </button>
           <p className="mt-3">
-            Didn't receive OTP?{" "}
+            Didn&apos;t receive OTP?{" "}
             <span
               onClick={handleResendOTP}
               className={`text-blue-500 hover:underline hover:cursor-pointer ${

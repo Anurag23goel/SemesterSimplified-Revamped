@@ -4,6 +4,7 @@ import "./globals.css";
 // import { ToastContainer } from "react-toastify";
 import { Toaster } from "react-hot-toast";
 import ReduxProvider from "./redux/Provider";
+import AuthInitializer from "./redux/AuthInitialize";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -33,8 +34,11 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <ReduxProvider>{children}</ReduxProvider>
-        <Toaster position="top-right" toastOptions={{ duration: 2000 }} />
+        <ReduxProvider>
+          <AuthInitializer />
+          {children}
+          </ReduxProvider>
+        <Toaster position="top-center" toastOptions={{ duration: 2000 }} />
       </body>
     </html>
   );

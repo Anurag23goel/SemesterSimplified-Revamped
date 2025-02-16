@@ -21,7 +21,7 @@ export async function POST(request: NextRequest) {
     response.cookies.delete("token");
 
     return response;
-  } catch (error) {
+  } catch (error:any) {
     console.error("Logout Error:", error.message);
     return NextResponse.json(
       { success: false, message: "Internal Server Error" },

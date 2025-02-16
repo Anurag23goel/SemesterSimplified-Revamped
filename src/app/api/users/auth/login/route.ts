@@ -1,7 +1,7 @@
 import { ApiError, ApiSuccess } from "@/app/api/services/ApiResponse";
 import databaseConnection from "@/utils/dbConnection";
 import USER from "@/utils/models/user.model";
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest } from "next/server";
 import jwt from "jsonwebtoken";
 
 export async function POST(req: NextRequest) {
@@ -58,7 +58,7 @@ export async function POST(req: NextRequest) {
       200,
       { name: "token", value: token, options: cookieOptions }
     );
-  } catch (error) {
+  } catch (error:any) {
     console.error("Error while logging in: ", error);
     return ApiError("Internal Server Error", 500);
   }

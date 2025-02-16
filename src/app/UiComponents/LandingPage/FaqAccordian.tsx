@@ -24,13 +24,13 @@ export function FAQsAccordion() {
       <AccordionItem value="item-3">
         <AccordionTrigger className="text-2xl font-fancy font-semibold">Is it animated?</AccordionTrigger>
         <AccordionContent>
-          Yes. It's animated by default, but you can disable it if you prefer.
+          Yes. It&apos;s animated by default, but you can disable it if you prefer.
         </AccordionContent>
       </AccordionItem>
       <AccordionItem value="item-4">
         <AccordionTrigger className="text-2xl font-fancy font-semibold">Is it animated?</AccordionTrigger>
         <AccordionContent>
-          Yes. It's animated by default, but you can disable it if you prefer.
+          Yes. It&apos;s animated by default, but you can disable it if you prefer.
         </AccordionContent>
       </AccordionItem>
       

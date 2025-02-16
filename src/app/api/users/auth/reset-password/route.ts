@@ -1,4 +1,4 @@
-import { ApiError, ApiSuccess } from "@/app/api/services/ApiResponse";
+import { ApiError } from "@/app/api/services/ApiResponse";
 import databaseConnection from "@/utils/dbConnection";
 import USER from "@/utils/models/user.model";
 import { NextRequest, NextResponse } from "next/server";
@@ -30,7 +30,7 @@ export async function POST(req: NextRequest) {
         status: 200,
       }
     );
-  } catch (error) {
+  } catch (error: any) {
     console.log("Error while resetting password: ", error.message);
     return ApiError(error.message, 500);
   }

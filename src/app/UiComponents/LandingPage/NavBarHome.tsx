@@ -24,7 +24,7 @@ export default function NavBarHome() {
         toast.success(response.data.message);
         dispatch(logout());
       }
-    } catch (error) {
+    } catch (error: any) {
       toast.error(error.response?.data?.error || "Error logging out");
     }
   };

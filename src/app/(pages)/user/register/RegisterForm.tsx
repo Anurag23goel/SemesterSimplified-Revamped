@@ -50,7 +50,7 @@ export default function RegisterForm() {
       if (response.data.success) {
         router.push("/"); // ✅ Redirect after successful registration
       }
-    } catch (error) {
+    } catch (error: any) {
       setServerError(error.response?.data?.error || "Registration failed!");
     }
   };
@@ -59,12 +59,13 @@ export default function RegisterForm() {
     <>
       {serverError && <p className="text-red-500 text-center">{serverError}</p>}
 
-      <form onSubmit={handleSubmit(registerFormSubmit)} 
-      className="grid grid-cols-1 md:grid-cols-2 gap-3 px-6 py-4 rounded-3xl w-full md:w-[75%] mx-auto h-fit md:h-[90%] ">
-        
+      <form
+        onSubmit={handleSubmit(registerFormSubmit)}
+        className="grid grid-cols-1 md:grid-cols-2 gap-3 px-6 py-4 rounded-3xl w-full md:w-[75%] mx-auto h-fit md:h-[90%] "
+      >
         {/* HEADING */}
         <h2 className="text-xl md:text-3xl font-semibold mb-3 text-center col-span-full">
-          Let's Get Started
+          Let&apos;s Get Started
         </h2>
 
         {/* NAME */}
@@ -200,7 +201,9 @@ export default function RegisterForm() {
           >
             <option value="">Select College</option>
             <option value="DGI">Dronacharya Group of Institutions</option>
-            <option value="Others" className="">Others</option>
+            <option value="Others" className="">
+              Others
+            </option>
           </select>
 
           {errors.college && (
