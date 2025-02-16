@@ -1,5 +1,4 @@
 "use client";
-
 import * as React from "react";
 import {
   Bell,
@@ -37,56 +36,56 @@ const data = {
   navMain: [
     {
       title: "Search",
-      url: "#",
+      url: "search",
       icon: Search,
     },
     {
       title: "Uploads",
-      url: "#",
+      url: "uploads",
       icon: BookOpen,
     },
     {
       title: "My Profile",
-      url: "#",
+      url: "profile",
       icon: Settings2,
     },
   ],
   socials: [
     {
       name: "Inbox",
-      url: "#",
+      url: "inbox",
       icon: Inbox,
     },
     {
       name: "Community",
-      url: "#",
+      url: "community",
       icon: UsersIcon,
     },
     {
       name: "Notifications",
-      url: "#",
+      url: "notifications",
       icon: Bell,
     },
     {
       name: "Connections",
-      url: "#",
+      url: "connections",
       icon: UserPlus,
     },
   ],
   navSecondary: [
     {
       title: "About Us",
-      url: "#",
+      url: "about-us",
       icon: LifeBuoy,
     },
     {
       title: "Support",
-      url: "#",
+      url: "support-us",
       icon: LifeBuoy,
     },
     {
       title: "Feedback",
-      url: "#",
+      url: "feedback",
       icon: Send,
     },
   ],

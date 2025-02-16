@@ -1,7 +1,5 @@
 "use client";
-
 import { type LucideIcon } from "lucide-react";
-
 import {
   SidebarGroup,
   SidebarGroupLabel,
@@ -9,6 +7,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
+import Link from "next/link";
 
 export function NavProjects({
   projects,
@@ -22,19 +21,21 @@ export function NavProjects({
   return (
     <SidebarGroup className="group-data-[collapsible=icon]:hidden">
       <SidebarGroupLabel className="">
-       <div className="flex flex-col w-full gap-1">
-       <span className="text-black text-2xl font-fancy font-semibold">Socials</span>
-       <span className="bg-black h-[3px] rounded-full w-full"></span>
-       </div>
+        <div className="flex flex-col w-full gap-1">
+          <span className="text-black text-2xl font-fancy font-semibold">
+            Socials
+          </span>
+          <span className="bg-black h-[3px] rounded-full w-full"></span>
+        </div>
       </SidebarGroupLabel>
       <SidebarMenu>
         {projects.map((item) => (
           <SidebarMenuItem key={item.name}>
             <SidebarMenuButton asChild>
-              <a href={item.url}>
+              <Link href={item.url}>
                 <item.icon />
                 <span className="truncate text-lg">{item.name}</span>
-              </a>
+              </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
         ))}
