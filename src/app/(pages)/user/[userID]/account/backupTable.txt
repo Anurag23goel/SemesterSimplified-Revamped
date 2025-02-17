@@ -1,0 +1,173 @@
+"use client";
+
+import { RootState } from "@/app/redux/Store";
+import Avatar from "@mui/material/Avatar";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { LucideEdit2 } from "lucide-react";
+
+type UserInfo = {
+  _id: string;
+  name?: string;
+  userName: string;
+  email: string;
+  phoneNumber: string;
+  status: string;
+  profilePicture?: string;
+  documentsUploaded: string[];
+  university?: string;
+  college?: string;
+  course?: string;
+  branch?: string;
+  educationLevel?: string;
+  freeCredits: number;
+  dateOfBirth?: string;
+  gender: string;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export default function ProfilePage() {
+  const { user } = useSelector((state: RootState) => state.auth);
+  const [userData, setUserData] = useState<UserInfo | null>(null);
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        if (!user?._id) return;
+        const response = await axios.get(/api/users/userData/${user._id});
+        setUserData(response.data.user);
+      } catch (error: any) {
+        console.error("Failed to fetch user data:", error);
+      }
+    };
+
+    fetchUserData();
+  }, [user?._id]);
+
+  const personalDetails = [
+    { name: "Full Name", value: userData?.name },
+    { name: "Username", value: userData?.userName },
+    {
+      name: "Date of Birth",
+      value: userData?.dateOfBirth
+        ? new Date(userData.dateOfBirth).toLocaleDateString()
+        : "N/A",
+    },
+    { name: "Gender", value: userData?.gender },
+    { name: "Address", value: "🇺🇸 California - United States" },
+  ];
+
+  const educationalDetails = [
+    { name: "University", value: userData?.university },
+    { name: "College", value: userData?.college },
+    { name: "Course", value: userData?.course },
+    { name: "Branch", value: userData?.branch },
+    { name: "Education Level", value: userData?.educationLevel },
+  ];
+
+  return (
+    <div className="w-full mx-auto px-6 pb-3 bg-white rounded-lg shadow-md">
+      {/* HEADER SECTION */}
+      <div className="relative bg-yellow-200 h-32 rounded-t-lg flex justify-end p-4"></div>
+
+      {/* PROFILE DETAILS */}
+      <div className="relative flex items-center -mt-12 px-6">
+        {/* PROFILE PICTURE */}
+        <Avatar
+          src={userData?.profilePicture || "https://via.placeholder.com/100"}
+          sx={{ width: 100, height: 100 }}
+          className="border-4 border-white shadow-md"
+        />
+      </div>
+
+      {/* USER INFO SECTION */}
+
+      {/* USER DETAILS */}
+      <div className="flex w-full mx-auto px-4 py-2 justify-between items-center">
+        
+        <div className="mt-1 flex flex-col">
+          <h1 className="text-2xl font-semibold">
+            {user?.name || "User Name"}
+          </h1>
+          <p className="text-gray-600 flex items-center gap-2">
+            🇺🇸 Northridge, California (CA), 91326, USA
+          </p>
+          <p className="text-gray-600">
+            Age: 24 | Gender: {userData?.gender || "N/A"} |{" "}
+            <span className="text-green-600 font-semibold">
+              Status: Active
+            </span>
+          </p>
+        </div>
+
+        {/* EDIT BUTTON */}
+
+        <button className="text-white flex items-center bg-black rounded-xl gap-2 p-3 text-xl">
+        <LucideEdit2 size={20}/> Edit Profile 
+        </button>
+      </div>
+
+      {/* INFO */}
+      <div className="mt-6 w-[85%] mx-auto grid grid-cols-1 md:grid-cols-2 gap-4">
+        {/* PERSONAL DETAILS TABLE */}
+        <div className="border rounded-lg">
+          <Table className="w-full">
+            <TableHeader>
+              <TableRow className="bg-gray-100">
+                <TableCell colSpan={2} className="text-lg font-semibold p-3">
+                  Account Details
+                </TableCell>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {personalDetails.map((item, index) => (
+                <TableRow key={index} className="border-t">
+                  <TableCell className="font-medium p-3">
+                    {item.name}:
+                  </TableCell>
+                  <TableCell className="text-gray-800 p-3 text-center">
+                    {item.value || "N/A"}
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
+
+        {/* EDUCATIONAL DETAILS TABLE */}
+        <div className="border rounded-lg">
+          <Table className="w-full">
+            <TableHeader>
+              <TableRow className="bg-gray-100">
+                <TableCell colSpan={2} className="text-lg font-semibold p-3">
+                  Educational Details
+                </TableCell>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {educationalDetails.map((item, index) => (
+                <TableRow key={index} className="border-t">
+                  <TableCell className="font-medium p-3">
+                    {item.name}:
+                  </TableCell>
+                  <TableCell className="text-gray-800 p-3 text-center">
+                    {item.value || "N/A"}
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
+      </div>
+    </div>
+  );
+}

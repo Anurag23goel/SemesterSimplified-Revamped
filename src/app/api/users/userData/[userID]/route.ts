@@ -23,7 +23,7 @@ export async function GET(
     }
 
     // Fetch user from MongoDB
-    const user = await USER.findById(userID); // Exclude password field
+    const user = await USER.findById(userID).select("+password"); // Exclude password field
 
     if (!user) {
       return NextResponse.json(

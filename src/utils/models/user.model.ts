@@ -19,6 +19,9 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    age:{
+      type: Number,
+    },
     password: {
       type: String,
       required: true,
@@ -36,6 +39,7 @@ const userSchema = new mongoose.Schema(
     },
     profilePicture: {
       type: String,
+      default: "",
     },
     documentsUploaded: [
       {
@@ -47,6 +51,12 @@ const userSchema = new mongoose.Schema(
       type: String,
     },
     college: {
+      type: String,
+    },
+    course: {
+      type: String,
+    },
+    branch: {
       type: String,
     },
     socketID: {
@@ -64,6 +74,17 @@ const userSchema = new mongoose.Schema(
       type: String,
       select: false,
       expires: 300, // 5 minutes
+    },
+    dateOfBirth: {
+      type: Date,
+    },
+    gender: {
+      type: String,
+      enum: ["Male", "Female", ""],
+      default: "",
+    },
+    educationLevel: {
+      type: String,
     },
   },
 

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { jwtVerify } from "jose";
 import USER from "@/utils/models/user.model";
+import databaseConnection from "@/utils/dbConnection";
 
 const JWT_SECRET = new TextEncoder().encode(process.env.JWT_SECRET as string);
 
@@ -23,6 +24,8 @@ export async function GET(request: NextRequest) {
         { status: 403 }
       );
     }
+
+    await databaseConnection();
 
     const user = await USER.findById(payload.id);
 

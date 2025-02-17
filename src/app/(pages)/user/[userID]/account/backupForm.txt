@@ -1,0 +1,97 @@
+<div className="w-full h-fit">
+      <div className="w-full h-full flex flex-col gap-2 p-4">
+        {/* HEADER => AVATAR AND NAME */}
+        <div className="py-4 px-3 flex rounded-xl items-center bg-gray-100 justify-between border border-gray-200">
+          {/* AVATAR, NAME AND EMAIL*/}
+          <div className="flex items-center gap-4 w-[30%]">
+            <Avatar>
+              <AvatarImage
+                src="https://github.com/shadcn.png"
+                className="rounded-xl w-20"
+              />
+              <AvatarFallback>{user?.name?.[0] ?? "?"}</AvatarFallback>
+            </Avatar>
+            <div className="flex flex-col">
+              <h1 className="text-xl font-semibold">
+                {userData?.name || "Loading..."}
+              </h1>
+              <span className="text-md text-gray-700">
+                {userData?.email || "Loading..."}
+              </span>
+              <span className="text-sm text-gray-700">
+                {userData?.phoneNumber || "Loading..."}
+              </span>
+            </div>
+          </div>
+          {/* DEACTIVATE BUTTON */}
+          <div>
+            <button className="bg-red-500 px-4 py-2 text-white rounded-lg hover:bg-red-600">
+              Deactivate Account
+            </button>
+          </div>
+        </div>
+
+        {/* ACCOUNT DETAILS FORM */}
+        <div className="py-4 px-3 rounded-xl bg-gray-100 border border-gray-200">
+          <form
+            onSubmit={handleSubmit(formHandler)}
+            className="w-full grid grid-rows-1 gap-4"
+          >
+            {/* NAME SECTION */}
+            <div className="flex flex-col">
+              <h1 className="text-lg font-semibold">Personal Information</h1>
+              <div className="w-full bg-gray-400 h-[2px] mt-1"></div>
+              <div className="grid grid-cols-2 gap-4 mt-3">
+                <div className="flex flex-col gap-1">
+                  <label className="text-md font-medium">Full Name</label>
+                  <input
+                    type="text"
+                    {...register("name")}
+                    className="border border-gray-200 rounded-lg py-2 px-3"
+                  />
+                </div>
+                <div className="flex flex-col gap-1">
+                  <label className="text-md font-medium">Username</label>
+                  <input
+                    type="text"
+                    {...register("userName")}
+                    className="border border-gray-200 rounded-lg py-2 px-3"
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* CONTACT DETAILS SECTION */}
+            <div className="flex flex-col">
+              <h1 className="text-lg font-semibold">Contact Details</h1>
+              <div className="w-full bg-gray-400 h-[2px] mt-1"></div>
+              <div className="grid grid-cols-2 gap-4 mt-3">
+                <div className="flex flex-col gap-1">
+                  <label className="text-md font-medium">Email</label>
+                  <input
+                    type="text"
+                    {...register("email")}
+                    className="border border-gray-200 rounded-lg py-2 px-3"
+                  />
+                </div>
+                <div className="flex flex-col gap-1">
+                  <label className="text-md font-medium">Phone Number</label>
+                  <input
+                    type="text"
+                    {...register("phoneNumber")}
+                    className="border border-gray-200 rounded-lg py-2 px-3"
+                  />
+                </div>
+              </div>
+            </div>
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="bg-blue-500 px-4 py-2 text-white rounded-lg"
+            >
+              {isSubmitting ? "Saving..." : "Save Changes"}
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
