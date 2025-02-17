@@ -11,7 +11,6 @@ import {
   UserPlus,
   UsersIcon,
 } from "lucide-react";
-
 import { NavMain } from "./nav-main";
 import { NavProjects } from "./nav-projects";
 import { NavSecondary } from "./nav-secondary";
@@ -21,18 +20,10 @@ import {
   SidebarContent,
   SidebarFooter,
   SidebarHeader,
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import Image from "next/image";
 
 const data = {
-  user: {
-    name: "Anurag",
-    email: "23anurag.goel@gmail.com",
-    avatar: "/avatars/shadcn.jpg",
-  },
   navMain: [
     {
       title: "Search",
@@ -45,8 +36,8 @@ const data = {
       icon: BookOpen,
     },
     {
-      title: "My Profile",
-      url: "profile",
+      title: "My Account",
+      url: "account",
       icon: Settings2,
     },
   ],
@@ -94,40 +85,33 @@ const data = {
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar variant="inset" {...props}>
-      
       <SidebarHeader>
-        <SidebarMenu>
-          <SidebarMenuItem>
-            <SidebarMenuButton size="lg" asChild>
-              <div>
-                <div className="flex  aspect-square size-12 border border-black items-center justify-center rounded-md bg-sidebar-primary text-sidebar-primary-foreground">
-                  <Image
-                    src={"/mainlogo.jpeg"}
-                    alt="logo"
-                    width={1000}
-                    height={1000}
-                    className="h-full w-full rounded-md"
-                  />
-                </div>
-                <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-semibold text-lg">
-                    Semester Simplified
-                  </span>
-                </div>
-              </div>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-        </SidebarMenu>
+        <div className="flex items-center gap-3">
+          <div className="flex aspect-square size-12 border border-black items-center justify-center rounded-md bg-sidebar-primary text-sidebar-primary-foreground">
+            <Image
+              src={"/mainlogo.jpeg"}
+              alt="logo"
+              width={1000}
+              height={1000}
+              className="h-full w-full rounded-md"
+            />
+          </div>
+          <div className="grid flex-1 text-left text-sm leading-tight">
+            <span className="truncate font-semibold text-lg">
+              Semester Simplified
+            </span>
+          </div>
+        </div>
       </SidebarHeader>
 
-      <SidebarContent className="mt-2">
+      <SidebarContent className="">
         <NavMain items={data.navMain} />
         <NavProjects projects={data.socials} />
         <NavSecondary items={data.navSecondary} className="mt-auto" />
       </SidebarContent>
 
       <SidebarFooter>
-        <NavUser user={data.user} />
+        <NavUser />
       </SidebarFooter>
     </Sidebar>
   );

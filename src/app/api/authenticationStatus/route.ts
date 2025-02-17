@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { jwtVerify } from "jose";
+import USER from "@/utils/models/user.model";
 
 const JWT_SECRET = new TextEncoder().encode(process.env.JWT_SECRET as string);
 
@@ -23,7 +24,16 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    return NextResponse.json({ success: true, userID: payload.id });
+    const user = await USER.findById(payload.id);
+
+    if (!user) {
+      return NextResponse.json(
+        { success: false, message: "Invalid Token" },
+        { status: 200 }
+      );
+    }
+
+    return NextResponse.json({ success: true, user: user });
   } catch (error: any) {
     console.error("JWT Verification Error:", error);
     return NextResponse.json(

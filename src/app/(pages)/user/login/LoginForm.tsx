@@ -30,9 +30,10 @@ export default function LoginForm() {
       const response = await axios.post("/api/users/auth/login", data);
 
       if (response.data.success) {
-        dispatch(login(response.data.data.id));
+        dispatch(login(response.data.data.user));
         toast.success("Login successful!");
-        router.push("/"); // ✅ Redirect on successful login
+        router.push(`/user/${response.data.data.user._id}/`); // ✅ Redirect on successful login
+        // router.push("/");
       }
     } catch (error: any) {
       setErrorMessage(error.response?.data?.error || "Login failed!");

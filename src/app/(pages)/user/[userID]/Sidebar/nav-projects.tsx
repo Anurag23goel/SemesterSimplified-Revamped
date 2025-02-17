@@ -8,6 +8,8 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import Link from "next/link";
+import { useSelector } from "react-redux";
+import { RootState } from "@/app/redux/Store";
 
 export function NavProjects({
   projects,
@@ -18,6 +20,8 @@ export function NavProjects({
     icon: LucideIcon;
   }[];
 }) {
+  const { user } = useSelector((state: RootState) => state.auth);
+
   return (
     <SidebarGroup className="group-data-[collapsible=icon]:hidden">
       <SidebarGroupLabel className="">
@@ -32,7 +36,7 @@ export function NavProjects({
         {projects.map((item) => (
           <SidebarMenuItem key={item.name}>
             <SidebarMenuButton asChild>
-              <Link href={item.url}>
+              <Link href={`/user/${user?._id}/${item.url}`}>
                 <item.icon />
                 <span className="truncate text-lg">{item.name}</span>
               </Link>

@@ -50,15 +50,12 @@ export async function POST(req: NextRequest) {
     return ApiSuccess(
       "Login Successful",
       {
-        id: existingUser._id,
-        email: existingUser.email,
-        userName: existingUser.userName,
-        role: existingUser.role,
+        user: existingUser,
       },
       200,
       { name: "token", value: token, options: cookieOptions }
     );
-  } catch (error:any) {
+  } catch (error: any) {
     console.error("Error while logging in: ", error);
     return ApiError("Internal Server Error", 500);
   }

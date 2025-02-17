@@ -54,12 +54,16 @@ const userSchema = new mongoose.Schema(
     },
     accessToken: {
       type: String,
-      expires: 60*60*24, // 1 day
+      expires: 60 * 60 * 24, // 1 day
+    },
+    freeCredits: {
+      type: Number,
+      default: 1000,
     },
     forgotPasswordOTP: {
       type: String,
       select: false,
-      expires: 60*5, // 5 minutes
+      expires: 300, // 5 minutes
     },
   },
 

@@ -8,7 +8,9 @@ import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function NavBarHome() {
-  const { userLoggedIn } = useSelector((state: RootState) => state.auth);
+  const { userLoggedIn, user } = useSelector(
+    (state: RootState) => state.auth
+  );
   const dispatch = useDispatch();
 
   const logoutHandler = async () => {
@@ -47,14 +49,26 @@ export default function NavBarHome() {
 
         {/* AUTH BUTTONS */}
         <ul className="flex gap-2 md:gap-5">
-          <li>
-            <Link
-              href={"/user/login"}
-              className="font-fancy font-semibold md:text-xl"
-            >
-              {userLoggedIn ? "Profile" : "Login"}
-            </Link>
-          </li>
+          {userLoggedIn ? (
+            <li>
+              <Link
+                href={`/user/${user?._id}`}
+                className="font-fancy font-semibold md:text-xl"
+              >
+                Dashboard
+              </Link>
+            </li>
+          ) : (
+            <li>
+              <Link
+                href={"/user/login"}
+                className="font-fancy font-semibold md:text-xl"
+              >
+                Login
+              </Link>
+            </li>
+          )}
+
           <li>
             <Link
               href={"/user/register"}

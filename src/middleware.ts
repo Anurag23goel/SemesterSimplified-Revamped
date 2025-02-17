@@ -50,7 +50,7 @@ export async function middleware(request: NextRequest) {
     }
 
     return NextResponse.next();
-  } catch (error: any){
+  } catch (error: any) {
     console.error("Middleware Error:", error.message);
     return NextResponse.next(); // Allow user to access login page if token is invalid
   }
@@ -63,5 +63,6 @@ export const config = {
     "/user/register",
     "/user/forgot-password",
     "/admin/:path*",
+    "/user/:path*",
   ],
 };

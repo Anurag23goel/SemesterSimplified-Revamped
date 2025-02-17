@@ -4,7 +4,21 @@ import axios from "axios";
 // Define Type for AuthUser
 type AuthUser = {
   userLoggedIn: boolean;
-  userID: string | null;
+  user: {
+    _id: string;
+    name: string;
+    userName: string;
+    email: string;
+    phoneNumber: string;
+    status: string;
+    university?: string; // Optional if not always present
+    college?: string | null;
+    role: string;
+    freeCredits: number;
+    documentsUploaded: string[]; // Assuming this is an array of file URLs or IDs
+    createdAt: string;
+    updatedAt: string;
+  } | null;
 };
 
 // Async Thunk: Fetch User Authentication Status from API
@@ -17,13 +31,43 @@ export const fetchUserAuth = createAsyncThunk<AuthUser>(
       });
 
       if (response.data.success) {
-        return { userLoggedIn: true, userID: response.data.userID };
+        // Ensure only safe fields are included
+        const {
+          _id,
+          name,
+          userName,
+          email,
+          phoneNumber,
+          status,
+          role,
+          freeCredits,
+          documentsUploaded,
+          createdAt,
+          updatedAt,
+        } = response.data.user;
+
+        return {
+          userLoggedIn: true,
+          user: {
+            _id,
+            name,
+            userName,
+            email,
+            phoneNumber,
+            status,
+            role,
+            freeCredits,
+            documentsUploaded,
+            createdAt,
+            updatedAt,
+          },
+        };
       } else {
-        return rejectWithValue({ userLoggedIn: false, userID: null });
+        return rejectWithValue({ userLoggedIn: false, user: null });
       }
-    } catch (error:any) {
+    } catch (error: any) {
       console.error("Error fetching auth status:", error);
-      return rejectWithValue({ userLoggedIn: false, userID: null }); 
+      return rejectWithValue({ userLoggedIn: false, user: null });
     }
   }
 );
@@ -31,7 +75,7 @@ export const fetchUserAuth = createAsyncThunk<AuthUser>(
 // Initial State (No `localStorage` in initial state to avoid hydration errors)
 const initialState: AuthUser = {
   userLoggedIn: false,
-  userID: null,
+  user: null,
 };
 
 // Redux Slice
@@ -41,17 +85,17 @@ const authSlice = createSlice({
   reducers: {
     login: (state, action) => {
       state.userLoggedIn = true;
-      state.userID = action.payload;
+      state.user = action.payload;
     },
     logout: (state) => {
       state.userLoggedIn = false;
-      state.userID = null;
+      state.user = null;
     },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchUserAuth.fulfilled, (state, action) => {
       state.userLoggedIn = action.payload.userLoggedIn;
-      state.userID = action.payload.userID;
+      state.user = action.payload.user;
     });
   },
 });
