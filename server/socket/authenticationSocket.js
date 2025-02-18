@@ -9,7 +9,7 @@ export const handleAuthentication = (socket, io) => {
 
     try {
       if (user) {
-        console.log(`🎉 ${user.userName} authenticated`);
+        console.log(`${user.userName} authenticated`);
         user.socketID = socket.id; // Attach socket ID to user
         await user.save();
         socket.emit("auth_success", user.userName);

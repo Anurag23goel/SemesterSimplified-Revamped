@@ -13,6 +13,7 @@
     "@emotion/cache": "^11.14.0",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
+    "@mui/icons-material": "^6.4.4",
     "@mui/material": "^6.4.4",
     "@mui/material-nextjs": "^6.4.3",
     "@radix-ui/react-accordion": "^1.2.3",
@@ -52,7 +53,8 @@
     "shadcn": "^2.4.0-canary.6",
     "socket.io-client": "^4.8.1",
     "tailwind-merge": "^3.0.1",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "vaul": "^1.1.2"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

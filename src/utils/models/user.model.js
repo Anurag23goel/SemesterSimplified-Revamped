@@ -19,7 +19,7 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    age:{
+    age: {
       type: Number,
     },
     password: {
@@ -85,6 +85,10 @@ const userSchema = new mongoose.Schema(
     },
     educationLevel: {
       type: String,
+    },
+    ratings: {
+      type: Number,
+      default: 0,
     },
   },
 
