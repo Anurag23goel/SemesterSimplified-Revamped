@@ -22,6 +22,22 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/utils/models/university.model.js"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.js",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "src/utils/models/university.model.js",
+    "src/utils/dbConnection.js",
+    "src/utils/nodeMailer.js",
+    "src/utils/models/subject.model.js",
+    "src/utils/models/document.model.js",
+    "src/utils/models/courses.model.js",
+    "src/utils/models/college.model.js",
+    "src/utils/models/user.model.js",
+    "src/utils/models/notifications.model.js",
+    "src/utils/models/messages.model.js"
+  ],
   "exclude": ["node_modules"]
 }

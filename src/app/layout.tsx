@@ -6,6 +6,7 @@ import { Toaster } from "react-hot-toast";
 import ReduxProvider from "./redux/Provider";
 import AuthInitializer from "./redux/AuthInitialize";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
+import { SocketProvider } from "./socket/SocketContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -37,7 +38,9 @@ export default function RootLayout({
       >
         <ReduxProvider>
           <AuthInitializer />
-          <AppRouterCacheProvider>{children}</AppRouterCacheProvider>
+          <SocketProvider>
+            <AppRouterCacheProvider>{children}</AppRouterCacheProvider>
+          </SocketProvider>
         </ReduxProvider>
         <Toaster position="top-center" toastOptions={{ duration: 2000 }} />
       </body>

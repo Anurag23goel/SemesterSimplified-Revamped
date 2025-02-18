@@ -1,6 +1,6 @@
 import nodemailer from "nodemailer";
 
-export async function sendOtpEmail(email: string, otp: string) {
+export async function sendOtpEmail(email, otp) {
   const transporter = nodemailer.createTransport({
     host: process.env.MAIL_HOST,
     auth: {
@@ -10,8 +10,8 @@ export async function sendOtpEmail(email: string, otp: string) {
   });
 
   const mailOptions = {
-    // ✅ Fixed object assignment
-    from: "Semesters Simplified <no-reply@semestersimplified.com>", // ✅ Added sender email
+    // Fixed object assignment
+    from: "Semesters Simplified <no-reply@semestersimplified.com>", // Added sender email
     to: email,
     subject: "OTP VERIFICATION",
     text: `Your OTP is ${otp}`,
@@ -21,7 +21,7 @@ export async function sendOtpEmail(email: string, otp: string) {
     await transporter.sendMail(mailOptions);
     console.log(`OTP email sent to ${email}`);
     return true;
-  } catch (error:any) {
+  } catch (error) {
     console.error("Error sending OTP email:", error);
   }
 }

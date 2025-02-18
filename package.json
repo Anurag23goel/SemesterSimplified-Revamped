@@ -2,6 +2,7 @@
   "name": "semestersimplified-revamped",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
@@ -49,6 +50,7 @@
     "react-redux": "^9.2.0",
     "react-toastify": "^11.0.3",
     "shadcn": "^2.4.0-canary.6",
+    "socket.io-client": "^4.8.1",
     "tailwind-merge": "^3.0.1",
     "tailwindcss-animate": "^1.0.7"
   },

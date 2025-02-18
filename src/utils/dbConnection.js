@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import "dotenv/config";
 
 const databaseConnection = async () => {
   if (!process.env.MONGO_DB_URL) {
@@ -6,9 +7,9 @@ const databaseConnection = async () => {
   }
 
   try {
-    await mongoose.connect(process.env.MONGO_DB_URL as string);
+    await mongoose.connect(process.env.MONGO_DB_URL);
     // console.log("Connected to DB successfully");
-  } catch (error: any) {
+  } catch (error) {
     console.log("Error while connecting to DB:", error.message);
   }
 };

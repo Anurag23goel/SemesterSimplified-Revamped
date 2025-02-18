@@ -1,7 +1,6 @@
 "use client";
 
 import { RootState } from "@/app/redux/Store";
-import { Coins } from "lucide-react";
 import Image from "next/image";
 import { useSelector } from "react-redux";
 
