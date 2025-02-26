@@ -13,6 +13,7 @@ export default async function Page({ params }: ProfilePageProps) {
     <div className="w-full h-full">
       {/* SEARCH DIV */}
       <div className="w-[97%] h-fit mx-auto bg-black rounded-3xl">
+
         <div className="flex flex-col gap-3 px-5 pt-20 pb-6">
           {/* SEARCH HEADING */}
           <h1 className="text-5xl  italic text-white capitalize">
@@ -24,7 +25,7 @@ export default async function Page({ params }: ProfilePageProps) {
             {/* Search Input */}
             <div className="flex items-center flex-1 border-r px-3">
               <Search />
-              <div className="w-[1px] h-10 rounded-full bg-gray-400 ml-2"></div>
+              <div className="w-[1px] h-8 rounded-full bg-gray-200 ml-2"></div>
               <span className="text-gray-400 pl-3">
                 <BookOpen />
               </span>
@@ -35,7 +36,7 @@ export default async function Page({ params }: ProfilePageProps) {
               />
             </div>
 
-            {/* Location Input */}
+            {/* Subject Input */}
             <div className="flex items-center flex-1 px-3 border-r">
               <span className="text-gray-400">
                 <BookOpen />
