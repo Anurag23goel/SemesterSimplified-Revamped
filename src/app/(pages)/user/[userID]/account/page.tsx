@@ -110,13 +110,13 @@ export default function ProfilePage() {
       <div className="flex w-full mx-auto px-4 py-2 justify-between items-center">
         <div className="mt-2 flex flex-col">
           <h1 className="text-3xl font-semibold">
-            {user?.name || "User Name"}
+            {userData?.name || "User Name"}
           </h1>
           <p className="text-gray-600 flex items-center gap-2">
-            🇺🇸 California, USA
+            Location
           </p>
           <p className="text-gray-600">
-            Age: 24 | Gender: {user?.gender || "N/A"} |{" "}
+            Age: 24 | Gender: {userData?.gender || "N/A"} |{" "}
             <span className="text-green-600 font-semibold">Status: Active</span>
           </p>
         </div>
