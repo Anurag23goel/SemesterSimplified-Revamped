@@ -52,7 +52,7 @@ export default function NavBarHome() {
           {userLoggedIn ? (
             <li>
               <Link
-                href={`/user/${user?._id}`}
+                href={`/user/${user?._id}/home`}
                 className="font-fancy font-semibold md:text-xl"
               >
                 Dashboard

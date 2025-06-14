@@ -2,6 +2,9 @@ import Image from "next/image";
 import LoginForm from "./LoginForm";
 
 export default function LoginPage() {
+ 
+  
+  
   return (
     // TOP DIV
     <div className="h-screen md:h-screen w-screen flex items-center justify-center bg-white">

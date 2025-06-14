@@ -29,6 +29,7 @@ type UserInfo = {
   updatedAt: string;
 };
 
+
 export default function ProfilePage() {
   const { user } = useSelector((state: RootState) => state.auth);
 

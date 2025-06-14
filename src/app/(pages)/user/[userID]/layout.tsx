@@ -1,15 +1,13 @@
-import { ChevronDown, ChevronUp } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 import Image from "next/image";
 import NavItem from "./Navbar";
 import {
   FaHome,
   FaUsers,
   FaFolder,
-  FaCalendar,
-  FaFileAlt,
-  FaChartPie,
   FaCog,
   FaBell,
+  FaInbox,
 } from "react-icons/fa";
 import { IoSearch } from "react-icons/io5";
 
@@ -17,7 +15,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex h-screen">
       {/* Sidebar */}
-      <div className="w-64 bg-white shadow-md flex flex-col justify-between">
+      <div className="w-64 bg-white shadow-md flex flex-col justify-between fixed top-0 left-0 h-full">
         {/* Logo */}
         <div className="flex h-[10%] items-center justify-center pt-5">
           <Image
@@ -32,28 +30,28 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
         {/* Navigation */}
         <nav className="flex-1 px-4 pt-7 space-y-1">
-          <NavItem icon={<FaHome size={20} />} label="Home" active />
-          <NavItem icon={<FaUsers size={20} />} label="Community" />
-          <NavItem icon={<FaFolder size={20} />} label="Saved Docs" />
-          <NavItem icon={<FaCalendar size={20} />} label="Calendar" />
-          <NavItem icon={<FaFileAlt size={20} />} label="Documents" />
-          <NavItem icon={<FaChartPie size={20} />} label="Reports" />
-
-          {/* Teams */}
-          <div className=" text-black font-semibold">Socials</div>
-          <NavItem label="Heroicons" team />
-          <NavItem label="Tailwind Labs" team />
-          <NavItem label="Workcation" team />
+          <NavItem icon={<FaHome size={20} />} label="Home" urllink="home" />
+          <NavItem icon={<FaInbox size={20} />} label="Inbox" urllink="inbox" />
+          <NavItem
+            icon={<FaUsers size={20} />}
+            label="Community"
+            urllink="community"
+          />
+          <NavItem
+            icon={<FaFolder size={20} />}
+            label="Saved Docs"
+            urllink="saved"
+          />
         </nav>
 
         {/* Settings */}
         <div className="p-4 border-t">
-          <NavItem icon={<FaCog />} label="Settings" />
+          <NavItem icon={<FaCog />} label="Settings" urllink="settings" />
         </div>
       </div>
 
       {/* Main Content Area */}
-      <div className="flex-1 flex flex-col">
+      <div className="flex-1 flex flex-col ml-64">
         {/* Top Bar */}
         <div className="flex items-center justify-between w-[95%] h-[10%] mx-auto border-b-2 px-6">
           {/* Search Bar */}
@@ -62,7 +60,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             <input
               type="text"
               placeholder="Search"
-              className="w-full pl-10 pr-4 py-2  rounded-lg text-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="w-full pl-10 pr-4 py-2 rounded-lg text-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
             />
           </div>
 
@@ -89,7 +87,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         </div>
 
         {/* Page Content */}
-        <div className="flex-1 m-6  border border-black">{children}</div>
+        <div className="flex-1 m-6  border border-black overflow-auto">
+          {children}
+        </div>
       </div>
     </div>
   );

@@ -1,67 +1,43 @@
-"use client";
+"use client"; // Mark as Client Component
+import { usePathname } from "next/navigation"; // Import usePathname hook from next/navigation
+import { useState } from "react";
+import { useSelector } from "react-redux";
 import { RootState } from "@/app/redux/Store";
 import Link from "next/link";
-import { useSelector } from "react-redux";
 
 export default function NavItem({
   icon,
   label,
-  active,
   team,
+  urllink,
 }: {
   icon?: React.ReactNode;
   label: string;
-  active?: boolean;
   team?: boolean;
+  urllink?: string;
 }) {
   const { user } = useSelector((state: RootState) => state.auth);
+  const pathname = usePathname(); // Get the current path using usePathname
+
+  const activeLink = urllink ? pathname.includes(urllink) : false;
+
   return (
-    <>
-      {label === "Home" ? (
-        <>
-          <Link
-            href={`/user/${user?._id}`}
-            className={`flex items-center px-4 py-2 rounded-lg text-sm font-medium ${
-              active
-                ? "bg-indigo-100 text-indigo-600"
-                : "text-gray-700 hover:bg-gray-100"
-            }`}
-          >
-            {icon && <span className="mr-3">{icon}</span>}
-            <span
-              className={
-                team
-                  ? "text-lg font-semibold text-gray-500"
-                  : "text-lg font-semibold"
-              }
-            >
-              {label}
-            </span>
-          </Link>
-        </>
-      ) : (
-        <>
-          <Link
-            href={`/user/${user?._id}/${label}`}
-            className={`flex items-center px-4 py-2 rounded-lg text-sm font-medium ${
-              active
-                ? "bg-indigo-100 text-indigo-600"
-                : "text-gray-700 hover:bg-gray-100"
-            }`}
-          >
-            {icon && <span className="mr-3">{icon}</span>}
-            <span
-              className={
-                team
-                  ? "text-lg font-semibold text-gray-500"
-                  : "text-lg font-semibold"
-              }
-            >
-              {label}
-            </span>
-          </Link>
-        </>
-      )}
-    </>
+    <Link
+      href={`/user/${user?._id}/${urllink}`} // Build the dynamic URL
+      className={`flex items-center px-4 py-2 rounded-lg text-sm font-medium ${
+        activeLink
+          ? "bg-indigo-100 text-indigo-600" // Active link styling
+          : "text-gray-700 hover:bg-gray-100" // Default styling
+      }`}
+    >
+      {icon && <span className="mr-3">{icon}</span>}
+      <span
+        className={
+          team ? "text-lg font-semibold text-gray-500" : "text-lg font-semibold"
+        }
+      >
+        {label}
+      </span>
+    </Link>
   );
 }
