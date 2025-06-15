@@ -46,7 +46,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
         {/* Settings */}
         <div className="p-4 border-t">
-          <NavItem icon={<FaCog />} label="Settings" urllink="settings" />
+          <NavItem icon={<FaCog />} label="Settings" urllink="account" />
         </div>
       </div>
 

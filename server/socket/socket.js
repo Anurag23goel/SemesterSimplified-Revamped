@@ -1,6 +1,7 @@
 import { Server } from "socket.io";
 import { handleAuthentication } from "./authenticationSocket.js";
 import { handleMessages } from "./messageSocket.js";
+import { handleConnectionRequests } from "./connectionReqSocket.js";
 
 export const initializeSocket = (server) => {
   const io = new Server(server, {
@@ -16,6 +17,7 @@ export const initializeSocket = (server) => {
     // Load event handlers
     handleAuthentication(socket, io);
     handleMessages(socket, io);
+    handleConnectionRequests(socket, io);
 
     socket.on("disconnect", () => {
       console.log(`⚠️ User disconnected: ${socket.id}`);

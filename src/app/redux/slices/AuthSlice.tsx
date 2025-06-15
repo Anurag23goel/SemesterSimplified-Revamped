@@ -1,84 +1,42 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { user_type } from "@/types/types";
 
-// Define Type for AuthUser
 type AuthUser = {
   userLoggedIn: boolean;
-  user: {
-    _id: string;
-    name: string;
-    userName: string;
-    email: string;
-    phoneNumber: string;
-    status: string;
-    university?: string; // Optional if not always present
-    college?: string | null;
-    role: string;
-    freeCredits: number;
-    documentsUploaded: string[]; // Assuming this is an array of file URLs or IDs
-    createdAt: string;
-    updatedAt: string;
-  } | null;
+  user: user_type | null;
 };
 
-// Async Thunk: Fetch User Authentication Status from API
 export const fetchUserAuth = createAsyncThunk<AuthUser>(
   "auth/fetchUserAuth",
   async (_, { rejectWithValue }) => {
     try {
       const response = await axios.get("/api/authenticationStatus", {
-        withCredentials: true, // Send HTTP-only cookies
+        withCredentials: true,
       });
 
       if (response.data.success) {
-        // Ensure only safe fields are included
-        const {
-          _id,
-          name,
-          userName,
-          email,
-          phoneNumber,
-          status,
-          role,
-          freeCredits,
-          documentsUploaded,
-          createdAt,
-          updatedAt,
-        } = response.data.user;
+        console.log("response.data.user:", response.data.user);
 
+        const user: user_type = response.data.user; // make sure backend sends all fields
         return {
           userLoggedIn: true,
-          user: {
-            _id,
-            name,
-            userName,
-            email,
-            phoneNumber,
-            status,
-            role,
-            freeCredits,
-            documentsUploaded,
-            createdAt,
-            updatedAt,
-          },
+          user,
         };
       } else {
         return rejectWithValue({ userLoggedIn: false, user: null });
       }
     } catch (error: any) {
-      console.error("Error fetching auth status:", error);
       return rejectWithValue({ userLoggedIn: false, user: null });
     }
   }
 );
 
-// Initial State (No `localStorage` in initial state to avoid hydration errors)
 const initialState: AuthUser = {
   userLoggedIn: false,
   user: null,
 };
 
-// Redux Slice
 const authSlice = createSlice({
   name: "auth",
   initialState,

@@ -90,8 +90,31 @@ const userSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
+    connections: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+      },
+    ],
+    sentConnectionRequestsUserIDs: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+      },
+    ],
+    receivedConnectionRequestsUserIDs: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+      },
+    ],
+    savedDocuments: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Document",
+      },
+    ],
   },
-
   { timestamps: true }
 );
 

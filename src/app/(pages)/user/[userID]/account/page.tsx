@@ -6,34 +6,12 @@ import Avatar from "@mui/material/Avatar";
 import { Eye, LucideEdit2, LucideEdit3, LucideEyeOff } from "lucide-react";
 import axios from "axios";
 import { useEffect, useState } from "react";
-
-type UserInfo = {
-  _id: string;
-  name: string;
-  userName: string;
-  email: string;
-  phoneNumber: string;
-  password: string;
-  status: string;
-  profilePicture?: string;
-  documentsUploaded: string[];
-  university?: string;
-  college?: string;
-  course?: string;
-  branch?: string;
-  educationLevel?: string;
-  freeCredits: number;
-  dateOfBirth?: string;
-  gender: string;
-  createdAt: Date;
-  updatedAt: string;
-};
-
+import { user_type } from "@/types/types";
 
 export default function ProfilePage() {
   const { user } = useSelector((state: RootState) => state.auth);
 
-  const [userData, setUserData] = useState<UserInfo | null>(null);
+  const [userData, setUserData] = useState<user_type | null>(null);
   const [showPassword, setShowPassword] = useState(false);
 
   useEffect(() => {
@@ -59,18 +37,25 @@ export default function ProfilePage() {
   ];
 
   const educationalDetails = [
-    { name: "University", value: userData?.university },
-    { name: "College", value: userData?.college },
-    { name: "Course", value: userData?.course },
-    { name: "Branch", value: userData?.branch },
-    { name: "Education Level", value: userData?.educationLevel },
+    { name: "University", value: userData?.university || "N/A" },
+    { name: "College", value: userData?.college || "N/A" },
+    { name: "Course", value: userData?.course || "N/A" },
+    { name: "Branch", value: userData?.branch || "N/A" },
+    { name: "Education Level", value: userData?.educationLevel || "N/A" },
   ];
 
   const securityDetails = [
     { name: "Email", value: userData?.email },
     { name: "Phone Number", value: userData?.phoneNumber },
-    { name: "Password", value: "password" },
-    { name: "Created At", value: userData?.createdAt.toLocaleString() },
+    // { name: "Password", value: userData?.password },
+    {
+      name: "Created At",
+      value:
+        userData?.createdAt ?
+        new Date(userData?.createdAt).toLocaleString("en-IN", {
+          dateStyle: "long",
+        }) : "N/A",
+    },
   ];
 
   return (
@@ -113,9 +98,7 @@ export default function ProfilePage() {
           <h1 className="text-3xl font-semibold">
             {userData?.name || "User Name"}
           </h1>
-          <p className="text-gray-600 flex items-center gap-2">
-            Location
-          </p>
+          <p className="text-gray-600 flex items-center gap-2">Location</p>
           <p className="text-gray-600">
             Age: 24 | Gender: {userData?.gender || "N/A"} |{" "}
             <span className="text-green-600 font-semibold">Status: Active</span>
