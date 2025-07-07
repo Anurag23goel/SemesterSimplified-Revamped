@@ -40,14 +40,15 @@ export interface message_type {
 
 export interface messageRooms_type {
   _id: string;
-  name: string;
+  name: string | null;
   participants: string[];
-  lastMessageContent: string;
+  lastMessageContent: string | null;
   lastMessageAt: string;
+  updatedAt: string;
 }
 
 export interface connection_type {
-  _id:string;
+  _id: string;
   name: string;
   profilePicture: string;
   college: string;

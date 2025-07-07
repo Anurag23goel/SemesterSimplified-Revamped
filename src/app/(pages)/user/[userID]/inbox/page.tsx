@@ -22,7 +22,7 @@ export default function Inbox() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [recentChats, setRecentChats] = useState<messageRooms_type[]>([]);
-  const [connections, setConnections] = useState<connection_type[] | []>([]);
+  const [connections, setConnections] = useState<connection_type[]>([]);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const { socket } = useSocket();
   const loggedInUser: user_type = useSelector((state: any) => state.auth.user);
@@ -31,9 +31,12 @@ export default function Inbox() {
   const fetchRecentChats = async () => {
     try {
       const response = await axios.get("/api/getRecentChats");
+      console.log("PARTICIPANT --- ", response.data.data);
       setRecentChats(response.data.data);
       if (response.data.data.length > 0 && !selectedChat) {
         setSelectedChat(response.data.data[0]);
+      } else {
+        setSelectedChat(null);
       }
     } catch (error) {
       console.error("Error fetching recent chats:", error);
@@ -45,15 +48,19 @@ export default function Inbox() {
     try {
       const response = await axios.get("/api/community/getConnections");
       console.log("ANURAG --- ", response.data.data);
-
       setConnections(response.data.data);
     } catch (error) {
       console.error("Error fetching connections:", error);
       // Fallback to dummy data if API call fails
       setConnections([
-        { id: "4", name: "David Lee", university: "Yale" },
-        { id: "5", name: "Emma Brown", university: "Oxford" },
-        { id: "6", name: "Frank Chen", university: "Caltech" },
+        { _id: "4", name: "David Lee", college: "Yale", profilePicture: "" },
+        { _id: "5", name: "Emma Brown", college: "Oxford", profilePicture: "" },
+        {
+          _id: "6",
+          name: "Frank Chen",
+          college: "Caltech",
+          profilePicture: "",
+        },
       ]);
     }
   };
@@ -124,30 +131,21 @@ export default function Inbox() {
 
   const handleStartNewChat = async (connection: connection_type) => {
     try {
-      const response = await axios.post("/api/chats", {
+      const response = await axios.post("/api/chats/newChat", {
         userId: connection._id,
       });
-      const newChat: messageRooms_type = response.data.data;
-      setRecentChats((prev) => [newChat, ...prev]);
-      setSelectedChat(newChat);
-      setMessages([]);
-      setIsDialogOpen(false);
-      setSearchQuery("");
+      if (response.status === 200) {
+        const newChat: messageRooms_type = response.data.data;
+        alert("Chat started successfully!");
+        setRecentChats((prev) => [newChat, ...prev]);
+        setSelectedChat(newChat);
+        setMessages([]);
+        setIsDialogOpen(false);
+        setSearchQuery("");
+      }
     } catch (error) {
       console.error("Error starting new chat:", error);
-      // Fallback to local state update
-      const newChat: messageRooms_type = {
-        _id: connection._id,
-        name: connection.name,
-        participants: [loggedInUser._id, connection._id],
-        lastMessageContent: "",
-        lastMessageAt: new Date().toISOString(),
-      };
-      setRecentChats((prev) => [newChat, ...prev]);
-      setSelectedChat(newChat);
-      setMessages([]);
-      setIsDialogOpen(false);
-      setSearchQuery("");
+      alert("Error starting new chat");
     }
   };
 
@@ -156,13 +154,23 @@ export default function Inbox() {
   };
 
   // Filter connections based on search query
-  const filteredConnections = connections
-    ? connections.filter(
-        (connection) =>
-          connection.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          connection.college.toLowerCase().includes(searchQuery.toLowerCase())
-      )
-    : [];
+  const filteredConnections = connections.filter(
+    (connection) =>
+      connection.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      connection.college.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  // Get participant names (assuming participants are IDs; ideally, backend should provide names)
+  const getParticipantNames = (participants: string[]) => {
+    // TODO: Map participant IDs to names via API or use connection data
+    return participants
+      .filter((id) => id !== loggedInUser._id)
+      .map((id) => {
+        const connection = connections.find((conn) => conn._id === id);
+        return connection ? connection.name : id;
+      })
+      .join(", ");
+  };
 
   return (
     <div className="flex h-full bg-gray-100">
@@ -177,37 +185,48 @@ export default function Inbox() {
             New Chat
           </button>
         </div>
-        <div className="divide-y divide-gray-200">
-          {recentChats.map((messageRoom) => (
-            <div
-              key={messageRoom._id}
-              className={`p-4 cursor-pointer hover:bg-gray-50 ${
-                selectedChat?._id === messageRoom._id ? "bg-blue-50" : ""
-              }`}
-              onClick={() => handleSelectedChat(messageRoom)}
-            >
-              <div className="flex justify-between items-center">
-                <div>
-                  <h3 className="text-md font-medium text-gray-800">
-                    {messageRoom.name}
-                  </h3>
-                  <p className="text-sm text-gray-500">
-                    {messageRoom.participants.length} participants
-                  </p>
-                  <p className="text-sm text-gray-600 truncate">
-                    {messageRoom.lastMessageContent}
-                  </p>
+        {recentChats.length > 0 ? (
+          <div className="divide-y divide-gray-200">
+            {recentChats.map((messageRoom) => (
+              <div
+                key={messageRoom._id}
+                className={`p-4 cursor-pointer hover:bg-gray-50 ${
+                  selectedChat?._id === messageRoom._id ? "bg-blue-50" : ""
+                }`}
+                onClick={() => handleSelectedChat(messageRoom)}
+              >
+                <div className="flex justify-between items-center">
+                  <div>
+                    <h3 className="text-md font-medium text-gray-800">
+                      {messageRoom.name}
+                    </h3>
+                    <p className="text-sm text-gray-500">
+                      {getParticipantNames(messageRoom.participants)}
+                    </p>
+                    <p className="text-sm text-gray-600 truncate">
+                      {messageRoom.lastMessageContent}
+                    </p>
+                  </div>
+                  <span className="text-xs text-gray-400">
+                    {messageRoom.lastMessageAt
+                      ? new Date(messageRoom.lastMessageAt).toLocaleTimeString(
+                          [],
+                          {
+                            hour: "2-digit",
+                            minute: "2-digit",
+                          }
+                        )
+                      : "No Messages Yet"}
+                  </span>
                 </div>
-                <span className="text-xs text-gray-400">
-                  {new Date(messageRoom.lastMessageAt).toLocaleTimeString([], {
-                    hour: "2-digit",
-                    minute: "2-digit",
-                  })}
-                </span>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        ) : (
+          <div className="p-4 text-center text-gray-500">
+            Start a conversation
+          </div>
+        )}
       </div>
 
       {/* Chat Window */}
@@ -224,7 +243,13 @@ export default function Inbox() {
                   {selectedChat.name}
                 </h3>
                 <p className="text-sm text-gray-500">
-                  {selectedChat._id}
+                  {connections.find(
+                    (conn) =>
+                      conn._id ===
+                      selectedChat.participants.find(
+                        (id) => id !== loggedInUser._id
+                      )
+                  )?.college || "Unknown College"}
                 </p>
               </div>
             </div>
@@ -287,7 +312,7 @@ export default function Inbox() {
           </>
         ) : (
           <div className="flex-1 flex items-center justify-center text-gray-500 min-h-0">
-            Select a chat to start messaging
+            Select a conversation
           </div>
         )}
       </div>
@@ -329,8 +354,8 @@ export default function Inbox() {
                       }
                       alt={connection.name}
                       className="w-10 h-10 rounded-full mr-3"
-                      height={100}
-                      width={100}
+                      height={40}
+                      width={40}
                     />
                     <div>
                       <h4 className="text-md font-medium text-gray-800">
