@@ -5,30 +5,44 @@ export const handleAuthentication = (socket, io) => {
   // EVENT => AUTHENTICATE
   socket.on("authenticate", async (userId) => {
     await databaseConnection();
-    const user = await USER.findById(userId);
 
     try {
-      if (user) {
-        console.log(`${user.userName} authenticated`);
-        user.socketID = socket.id; // Attach socket ID to user
-        await user.save();
-        socket.emit("auth_success", user.userName);
+      const res = await USER.updateOne(
+        { _id: userId, socketIDs: { $ne: socket.id } },
+        { $addToSet: { socketIDs: socket.id } }
+      );
+
+      const roomID = `user_${userId}`;
+      socket.join(roomID); // Safe in both cases
+
+      if (res.modifiedCount > 0) {
+        socket.emit("auth_success", "User authenticated and joined room");
+        console.log(`User ${userId} joined room ${roomID}`);
       } else {
-        socket.emit("auth_error", "User not found");
+        console.log(`User ${userId} rejoined room ${roomID}`);
       }
     } catch (error) {
-      console.error("❌ Authentication error:", error);
+      console.error("Authentication error:", error);
       socket.emit("auth_error", "Database error");
     }
   });
 
   // EVENT => DISCONNECT
   socket.on("disconnect", async () => {
-    const user = await USER.findOne({ socketID: socket.id });
-    if (user) {
-      user.socketID = null;
-      await user.save();
+    try {
+      const user = await USER.findOneAndUpdate(
+        { socketIDs: socket.id },
+        { $pull: { socketIDs: socket.id } },
+        { new: true }
+      );
+
+      if (user) {
+        console.log(`${user.userName} disconnected with socket id - ${socket.id}`);
+      } else {
+        console.log(`Unknown user disconnected: socket id - ${socket.id}`);
+      }
+    } catch (error) {
+      console.error("Error during disconnect cleanup:", error);
     }
-    console.log(`⚠️ User disconnected: ${socket.id}`);
   });
 };

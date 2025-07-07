@@ -1,4 +1,4 @@
-import MESSAGE from "../../src/utils/models/messages.model.js";
+import {MESSAGE} from "../../src/utils/models/messages.model.js";
 import databaseConnection from "../../src/utils/dbConnection.js";
 
 export const handleMessages = (socket, io) => {

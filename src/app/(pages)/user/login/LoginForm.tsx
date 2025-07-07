@@ -32,8 +32,7 @@ export default function LoginForm() {
       if (response.data.success) {
         dispatch(login(response.data.data.user));
         toast.success("Login successful!");
-        router.push(`/user/${response.data.data.user._id}/`); // ✅ Redirect on successful login
-        // router.push("/");
+        router.push(`/user/${response.data.data.user._id}/home`); // ✅ Redirect on successful login
       }
     } catch (error: any) {
       setErrorMessage(error.response?.data?.error || "Login failed!");

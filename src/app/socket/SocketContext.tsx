@@ -3,6 +3,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { io, Socket } from "socket.io-client";
 import { RootState } from "../redux/Store";
+import { registerSocketListeners } from "./SocketListenerEvents";
 
 const SOCKET_URL =
   process.env.NEXT_PUBLIC_SOCKET_URL || "http://localhost:5000";
@@ -14,7 +15,6 @@ interface SocketContextProps {
 const SocketContext = createContext<SocketContextProps>({ socket: null });
 
 export const SocketProvider = ({ children }: { children: React.ReactNode }) => {
-    
   const [socket, setSocket] = useState<Socket | null>(null);
   const { user } = useSelector((state: RootState) => state.auth);
 
@@ -33,6 +33,7 @@ export const SocketProvider = ({ children }: { children: React.ReactNode }) => {
 
     newSocket.on("auth_success", (username) => {
       console.log(`Authentication successful for ${username}`);
+      registerSocketListeners(newSocket, user._id);
     });
 
     newSocket.on("auth_error", (message) => {

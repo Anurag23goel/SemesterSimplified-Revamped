@@ -53,43 +53,47 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       {/* Main Content Area */}
       <div className="flex-1 flex flex-col ml-64">
         {/* Top Bar */}
-        <div className="flex items-center justify-between w-[95%] h-[10%] mx-auto border-b-2 px-6">
+        <div className="flex items-center justify-between h-16 bg-white border-b border-gray-200 px-4 shadow-sm">
           {/* Search Bar */}
-          <div className="relative w-[85%] flex items-center">
-            <IoSearch className="absolute left-3 text-gray-400" size={20} />
+          <div className="relative w-full">
+            <IoSearch
+              className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
+              size={20}
+            />
             <input
               type="text"
               placeholder="Search"
-              className="w-full pl-10 pr-4 py-2 rounded-lg text-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="w-full pl-10 pr-4 py-2 rounded-md bg-gray-100 text-gray-900 text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400 transition"
             />
           </div>
 
           {/* Profile */}
-          <div className="flex items-center space-x-4 w-fit">
-            <button className="relative">
-              <span className="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full"></span>
-              <FaBell className="text-gray-500 text-lg" size={25} />
+          <div className="flex items-center ml-4 space-x-2">
+            <button className="relative hover:text-yellow-500 transition">
+              <span className="absolute -top-1 w-2 h-2 bg-red-400 rounded-full"></span>
+              <FaBell className="text-gray-600" size={20} />
             </button>
-            <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-2">
               <Image
-                src={"/mainlogo.jpeg"}
+                src="/mainlogo.jpeg"
                 alt="Profile"
-                className="w-12 h-12 rounded-full"
-                width={100}
-                height={100}
+                className="w-10 h-10 rounded-full"
+                width="100"
+                height="40"
               />
-              <span className="text-lg font-semibold text-gray-700">
+              <span className="text-base font-bold text-gray-800">
                 Tom Cook
               </span>
-              <ChevronDown />
+              <ChevronDown
+                className="text-gray-600 hover:text-yellow-500 transition"
+                size="20"
+              />
             </div>
           </div>
         </div>
 
         {/* Page Content */}
-        <div className="flex-1 m-6  border border-black overflow-auto">
-          {children}
-        </div>
+        <div className="flex-1 p-6 overflow-y-auto bg-gray-50">{children}</div>
       </div>
     </div>
   );

@@ -1,10 +1,11 @@
 import { Server } from "socket.io";
 import { handleAuthentication } from "./authenticationSocket.js";
 import { handleMessages } from "./messageSocket.js";
-import { handleConnectionRequests } from "./connectionReqSocket.js";
+
+let io;
 
 export const initializeSocket = (server) => {
-  const io = new Server(server, {
+  io = new Server(server, {
     cors: {
       origin: "http://localhost:3000", // Next.js frontend URL
       methods: ["GET", "POST"],
@@ -12,17 +13,12 @@ export const initializeSocket = (server) => {
   });
 
   io.on("connection", (socket) => {
-    console.log(`User connected: ${socket.id}`);
-
     // Load event handlers
     handleAuthentication(socket, io);
     handleMessages(socket, io);
-    handleConnectionRequests(socket, io);
-
-    socket.on("disconnect", () => {
-      console.log(`⚠️ User disconnected: ${socket.id}`);
-    });
   });
 
   return io;
 };
+
+export const getIO = () => io;

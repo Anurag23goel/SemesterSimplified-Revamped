@@ -1,5 +1,6 @@
 import CONNECTION_REQUEST from "../../../src/utils/models/connectionRequest.model.js";
 import USER from "../../../src/utils/models/user.model.js";
+import { getIO } from "../../socket/socket.js";
 
 export const CREATE_CONNECTION_REQUEST = async (req, res) => {
   try {
@@ -55,6 +56,16 @@ export const CREATE_CONNECTION_REQUEST = async (req, res) => {
         .status(500)
         .json({ message: "Error while creating connection request" });
     }
+
+    //SENDING NOTIFICATION TO RECIEVER
+    const io = getIO();
+    io.to(`user_${reciver_person._id}`).emit("receive_connection_request", {
+      sender: {
+        name: connection_req_sender.userName,
+        profilePicture: connection_req_sender.profilePicture,
+      },
+      message: "New connection request",
+    });
 
     return res.status(200).json({
       success: true,

@@ -59,8 +59,9 @@ const userSchema = new mongoose.Schema(
     branch: {
       type: String,
     },
-    socketID: {
-      type: String,
+    socketIDs: {
+      type: [String],
+      default:[],
     },
     accessToken: {
       type: String,

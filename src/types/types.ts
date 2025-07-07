@@ -26,3 +26,30 @@ export interface user_type {
   createdAt: string;
   updatedAt: string;
 }
+
+export interface message_type {
+  _id: string;
+  sender: {
+    _id: string;
+    name: string;
+    profilePicture: string;
+  };
+  content: string;
+  createdAt: string;
+}
+
+export interface messageRooms_type {
+  _id: string;
+  name: string;
+  participants: string[];
+  lastMessageContent: string;
+  lastMessageAt: string;
+}
+
+export interface connection_type {
+  _id:string;
+  name: string;
+  profilePicture: string;
+  college: string;
+  course: string;
+}
