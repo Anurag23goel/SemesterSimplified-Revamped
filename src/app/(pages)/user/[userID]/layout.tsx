@@ -13,11 +13,11 @@ import { IoSearch } from "react-icons/io5";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex h-screen">
+    <div className="flex h-screen w-screen">
       {/* Sidebar */}
-      <div className="w-64 bg-white shadow-md flex flex-col justify-between fixed top-0 left-0 h-full">
+      <div className="w-1/5 bg-white shadow-md flex flex-col justify-between fixed top-0 left-0 h-full z-20">
         {/* Logo */}
-        <div className="flex h-[10%] items-center justify-center pt-5">
+        <div className="flex h-[10%] items-center justify-center space-x-3 pt-5">
           <Image
             src={"/mainlogo.jpeg"}
             alt="logo"
@@ -25,7 +25,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             height={100}
             className="w-14 h-14 rounded-full"
           />
-          <span className="text-lg font-semibold">Semester Simplified</span>
+          <span className="text-xl font-semibold">Semester Simplified</span>
         </div>
 
         {/* Navigation */}
@@ -50,12 +50,12 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         </div>
       </div>
 
-      {/* Main Content Area */}
-      <div className="flex-1 flex flex-col ml-64">
+      {/* Main Content Area + Top Bar + Right Panel */}
+      <div className="flex flex-col flex-1 ml-[20%] w-4/5">
         {/* Top Bar */}
-        <div className="flex items-center justify-between h-16 bg-white border-b border-gray-200 px-4 shadow-sm">
+        <div className="flex items-center justify-between h-16 bg-white border-b border-gray-200 px-4 shadow-sm fixed top-0 left-[20%] right-0 z-10">
           {/* Search Bar */}
-          <div className="relative w-full">
+          <div className="relative w-full max-w-2xl">
             <IoSearch
               className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
               size={20}
@@ -92,8 +92,20 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           </div>
         </div>
 
-        {/* Page Content */}
-        <div className="flex-1 p-6 overflow-y-auto bg-gray-50">{children}</div>
+        {/* Main Content + Right Panel */}
+        <div className="flex flex-1 mt-16 w-full">
+          {/* Main Content */}
+          <div className="w-4/5 p-6 overflow-y-auto bg-gray-50">
+            {children}
+          </div>
+
+          {/* Right Panel (Contacts Panel) */}
+          <div className="w-1/5 bg-white shadow-md flex flex-col">
+            <div className="flex-1 p-4 overflow-y-auto">
+              Contacts Panel
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

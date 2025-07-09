@@ -57,7 +57,7 @@ export const registerSocketListeners = (socket: Socket, userId: string) => {
   });
 
   socket.on("connection_request_accepted", (data) => {
-    toast.success(`${data.byName} accepted your connection request`);
+    toast.success(`${data.accepter.name} accepted your connection request`);
   });
 
   socket.on("disconnect", () => {
