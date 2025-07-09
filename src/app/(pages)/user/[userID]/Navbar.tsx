@@ -1,6 +1,5 @@
 "use client"; // Mark as Client Component
 import { usePathname } from "next/navigation"; // Import usePathname hook from next/navigation
-import { useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "@/app/redux/Store";
 import Link from "next/link";

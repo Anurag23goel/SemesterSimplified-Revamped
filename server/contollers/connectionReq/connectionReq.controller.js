@@ -28,7 +28,6 @@ export const CREATE_CONNECTION_REQUEST = async (req, res) => {
       reciver_person.connections.includes(sender_person._id) ||
       sender_person.connections.includes(reciver_person._id)
     ) {
-      console.log("Already connected. Can't send connection request");
       return res.status(400).json({
         success: false,
         message: "Already connected. Can't send connection request",

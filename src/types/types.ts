@@ -22,6 +22,7 @@ export interface user_type {
   ratings: number;
   connections: string[];
   sentConnectionRequestsUserIDs: string[];
+  receivedConnectionRequestsUserIDs: string[];
   savedDocuments: string[];
   createdAt: string;
   updatedAt: string;
