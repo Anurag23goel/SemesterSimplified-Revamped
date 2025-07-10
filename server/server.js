@@ -6,6 +6,7 @@ import "dotenv/config";
 import connectionRouter from "./routes/connectionReq/connectionReq.route.js";
 import cors from "cors";
 import cookieParser from "cookie-parser";
+import { redis_client } from "./config/redis.connection.js";
 
 // 1. Create Express app
 const app = express();
@@ -28,12 +29,15 @@ app.get("/api/health", (req, res) => {
 
 // 4. Create HTTP server from Express app
 const server = http.createServer(app);
+export const onlineUsers = new Map();
 
 // 5. Initialize MongoDB connection and then Socket
 const startServer = async () => {
   try {
     await databaseConnection();
     console.log("Connected to MongoDB");
+    await redis_client.connect();
+    console.log("Connected to Redis");
 
     // 6. Initialize Socket.IO
     initializeSocket(server);

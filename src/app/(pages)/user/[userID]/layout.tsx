@@ -2,6 +2,7 @@ import Image from "next/image";
 import NavItem from "./Navbar";
 import { FaHome, FaUsers, FaFolder, FaCog, FaInbox } from "react-icons/fa";
 import Topbar from "./layout_components/Topbar";
+import ContactsPanel from "./layout_components/ContactsPanel";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -55,7 +56,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
           {/* Right Panel (Contacts Panel) */}
           <div className="w-1/5 bg-white shadow-md flex flex-col">
-            <div className="flex-1 p-4 overflow-y-auto">Contacts Panel</div>
+            <ContactsPanel />
           </div>
         </div>
       </div>

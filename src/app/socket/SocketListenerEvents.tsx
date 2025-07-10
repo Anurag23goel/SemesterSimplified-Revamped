@@ -2,11 +2,32 @@
 import { Socket } from "socket.io-client";
 import { toast } from "react-hot-toast";
 import Image from "next/image";
-// import store and actions if needed
-// import { store } from "../redux/Store";
-// import { addNotification } from "../redux/notificationSlice";
+import {
+  addOnlineUser,
+  removeOnlineUser,
+  setOnlineUsers,
+} from "../redux/slices/OnlineUsersSlice";
 
-export const registerSocketListeners = (socket: Socket, userId: string) => {
+export const registerSocketListeners = (
+  socket: Socket,
+  userId: string,
+  dispatch: any
+) => {
+  socket.on("online_users", (data) => {
+    console.log("Online users:", data);
+    dispatch(setOnlineUsers(data));
+  });
+
+  socket.on("user_online", (userId) => {
+    console.log("User", userId, "is online");
+    dispatch(addOnlineUser(userId));
+  });
+
+  socket.on("user_offline", (userId) => {
+    console.log("User", userId, "is offline");
+    dispatch(removeOnlineUser(userId));
+  });
+
   socket.on("receive_connection_request", (data) => {
     console.log("New connection request:", data);
     toast.custom((t: any) => (

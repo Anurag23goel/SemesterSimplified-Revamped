@@ -1,6 +1,6 @@
 "use client";
 import { createContext, useContext, useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { io, Socket } from "socket.io-client";
 import { RootState } from "../redux/Store";
 import { registerSocketListeners } from "./SocketListenerEvents";
@@ -17,6 +17,7 @@ const SocketContext = createContext<SocketContextProps>({ socket: null });
 export const SocketProvider = ({ children }: { children: React.ReactNode }) => {
   const [socket, setSocket] = useState<Socket | null>(null);
   const { user } = useSelector((state: RootState) => state.auth);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (!user) return; // Don't connect if user is not authenticated
@@ -33,7 +34,7 @@ export const SocketProvider = ({ children }: { children: React.ReactNode }) => {
 
     newSocket.on("auth_success", (username) => {
       console.log(`Authentication successful for ${username}`);
-      registerSocketListeners(newSocket, user._id);
+      registerSocketListeners(newSocket, user._id, dispatch);
     });
 
     newSocket.on("auth_error", (message) => {

@@ -11,7 +11,6 @@ export async function GET(req: NextRequest) {
     }
 
     console.log(user?.user);
-    
 
     const userConnections = await USER.findById(user?.user._id).populate({
       path: "connections",
@@ -19,7 +18,11 @@ export async function GET(req: NextRequest) {
       select: "_id name profilePicture college course",
     });
 
-    return ApiSuccess("Connections fetched successfully", userConnections.connections, 200);
+    return ApiSuccess(
+      "Connections fetched successfully",
+      userConnections.connections,
+      200
+    );
   } catch (error: any) {
     return ApiError(error.message, 500);
   }
