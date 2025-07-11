@@ -39,12 +39,13 @@ export interface message_type {
   createdAt: string;
 }
 
-export interface messageRooms_type {
+export interface messageRoom_type {
   _id: string;
   name: string | null;
   participants: string[];
   lastMessageContent: string | null;
   lastMessageAt: string;
+  room_type: "individual" | "group";
   updatedAt: string;
 }
 

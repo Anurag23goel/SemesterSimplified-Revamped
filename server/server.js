@@ -29,7 +29,6 @@ app.get("/api/health", (req, res) => {
 
 // 4. Create HTTP server from Express app
 const server = http.createServer(app);
-export const onlineUsers = new Map();
 
 // 5. Initialize MongoDB connection and then Socket
 const startServer = async () => {

@@ -33,34 +33,34 @@ const MessageSchema = new mongoose.Schema({
 export const MESSAGE =
   mongoose.models.Message || mongoose.model("Message", MessageSchema);
 
-const messageRoomSchema = new mongoose.Schema({
-  participants: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
+const messageRoomSchema = new mongoose.Schema(
+  {
+    participants: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+        required: true,
+      },
+    ],
+    room_type: {
+      type: String,
+      enum: ["individual", "group"],
       required: true,
     },
-  ],
-  name: {
-    type: String,
+    name: {
+      type: String,
+    },
+    lastMessageContent: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Message",
+    },
+    lastMessageAt: {
+      type: Date,
+      default: Date.now,
+    },
   },
-  lastMessageContent: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Message",
-  },
-  lastMessageAt: {
-    type: Date,
-    default: Date.now,
-  },
-  createdAt: {
-    type: Date,
-    default: Date.now,
-  },
-  updatedAt: {
-    type: Date,
-    default: Date.now,
-  },
-});
+  { timestamps: true }
+);
 
 export const MESSAGE_ROOM =
   mongoose.models.MessageRoom ||

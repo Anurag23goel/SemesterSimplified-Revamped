@@ -28,6 +28,10 @@ export const registerSocketListeners = (
     dispatch(removeOnlineUser(userId));
   });
 
+  socket.on("new_message", (data) => {
+    alert("New message:" + data);
+  }); 
+
   socket.on("receive_connection_request", (data) => {
     console.log("New connection request:", data);
     toast.custom((t: any) => (

@@ -22,13 +22,16 @@ export async function GET(
     }
 
     //LOGIC TO FETCH ALL MESSAGES RELATED TO ROOM
-    const messages = await MESSAGE.find({ roomId: roomID }).populate(
-      "sender",
-      "name profilePicture"
-    );
+    const messages = await MESSAGE.find({ roomId: roomID }).sort({
+      createdAt: -1,
+    });
 
     return ApiSuccess("Messages fetched successfully", messages, 200);
   } catch (error: any) {
+    console.log(
+      "Internal server error while fetching messages for particular chat",
+      error.message
+    );
     return ApiError(error.message, 500);
   }
 }
